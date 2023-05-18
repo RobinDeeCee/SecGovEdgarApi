@@ -7,7 +7,7 @@ from .InvestingActivitiesCashFlow import InvestingActivitiesCashFlow, INVESTING_
 from .OperatingCashFlow import OperatingCashFlow, OPERATING_CASHFLOW
 from .RepurchaseOfStock import RepurchaseOfStock, REPURCHASE_OF_STOCK
 
-from secEdgarApi.EdgarHelper import EdgarHelper
+from SecGovEdgarApi.EdgarHelper import EdgarHelper
 
 class CashFlowStatement:
     def getCashStatement(secGovFacts: array, cik: string):

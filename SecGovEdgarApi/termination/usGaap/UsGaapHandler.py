@@ -1,9 +1,9 @@
-from secEdgarApi.EdgarApi import EdgarApi
+from SecGovEdgarApi.EdgarApi import EdgarApi
 from .CashFlowStatement.CashFlowStatement import CashFlowStatement
 from .BalanceSheetStatement.BalanceSheetStatement import BalanceSheetStatement
 from .IncomeStatement.IncomeStatement import IncomeStatement
 
-from secEdgarApi._UserAgent import (
+from SecGovEdgarApi._UserAgent import (
     BASE_USER_AGENT
 )
 

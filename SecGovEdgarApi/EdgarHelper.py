@@ -54,7 +54,6 @@ class EdgarHelper():
                     except KeyError:
                         print("secgov respone structure for income  not correct - please log a bug")
     return blob
-  
 
   def getBalanceFact(secGovFacts: array, cik: string, FactArray: array, blob: array, naming: str):
     edgar = EdgarApi(user_agent=BASE_USER_AGENT)

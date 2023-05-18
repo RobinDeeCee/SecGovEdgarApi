@@ -2,24 +2,38 @@
 from ._types import JSONType
 from typing import Union
 
-from secEdgarApi.EdgarApi import EdgarApi
+from SecGovEdgarApi.EdgarApi import EdgarApi
 from .termination.TerminationHandler import TerminationHandler
+from sec_cik_mapper import StockMapper
+from pathlib import Path
 
-from secEdgarApi._UserAgent import (
+from SecGovEdgarApi._UserAgent import (
     BASE_USER_AGENT
 )
 
 class EdgarClient():
     """An :class:`EdgarClient` object."""
 
-    def get_filling(cik: str) -> JSONType:
+    def get_filling(ticker: str, cik: str = "") -> JSONType:
         """
+        :param ticker: TICKER to obtain the CIK to then get the submissions.
         :param cik: CIK to obtain submissions for.
         :return: JSON response from an sec.gov API endpoint
             for the specified CIK, including everthing we
             can find about this the specified CIK that is in
             the param
         """
+
+        if cik == "":
+            if ticker != "":
+                try: 
+                    mapper = StockMapper()
+                    cikTxtFile = mapper.raw_dataframe
+                    cik = cikTxtFile[cikTxtFile['Ticker'] == ticker.upper()]['CIK'].values[0]
+                except:
+                    print("No cik found")
+            else:
+                print("Please fill in a ticker or a cik")
 
         #get all the USGaap facts that we find for this company
         dataFrames = TerminationHandler.get_usGaap(cik=cik)

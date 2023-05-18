@@ -8,7 +8,7 @@ from .OperatingExpenses import OperatingExpenses, OPERATING_EXPENSES
 from .GrossProfit import GrossProfit, GROSS_PROFIT
 from .CostOfRevenue import CostOfRevenue, COST_OF_REVENUE
 
-from secEdgarApi.EdgarHelper import EdgarHelper
+from SecGovEdgarApi.EdgarHelper import EdgarHelper
 
 class IncomeStatement:
     def getIncomeStatement(secGovFacts: array, cik: string):

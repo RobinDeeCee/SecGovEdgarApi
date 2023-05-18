@@ -1,4 +1,4 @@
-# secEdgarApi -> Forked from sec-edgar-api
+# SecGovEdgarApi -> Forked from sec-edgar-api
 
 <!---
 [![Tests](https://github.com/jadchaar/sec-edgar-api/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/jadchaar/sec-edgar-api/actions/workflows/continuous_integration.yml)
@@ -10,7 +10,7 @@
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 -->
 
-**secEdgarApi** is an unofficial Python API wrapper for the [SEC EDGAR REST API](https://www.sec.gov/edgar/sec-api-documentation). that will format facts into json file, sorted by submission
+**SecGovEdgarApi** is an unofficial Python API wrapper for the [SEC EDGAR REST API](https://www.sec.gov/edgar/sec-api-documentation). that will format facts into json file, sorted by submission
 
 --> this is a fork from [sec-edgar-api](https://github.com/jadchaar/sec-edgar-api)
 
@@ -30,7 +30,7 @@ not there yet -> but you can install the one before the fork
 ### Usage
 
 ```python
->>> from secEdgarApi import EdgarClient
+>>> from SecGovEdgarApi import EdgarClient
 
 # Get the fillings **all** submissions for apple
 >>> EdgarClient.get_filling(cik="320193")

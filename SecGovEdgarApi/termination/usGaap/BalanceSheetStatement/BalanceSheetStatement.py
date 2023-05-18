@@ -11,7 +11,7 @@ from .ShortTermDebt import ShortTermDebt, SHORT_TERM_DEBT
 from .TotalAssets import TotalAssets, TOTAL_ASSETS
 from .TotalStockholderEquity import TotalStockholderEquity, TOTAL_STOCKHOLDER_EQUITY
 
-from secEdgarApi.EdgarHelper import EdgarHelper
+from SecGovEdgarApi.EdgarHelper import EdgarHelper
 
 class BalanceSheetStatement:
     def getBalanceSheetStatement(secGovFacts: array, cik: string):

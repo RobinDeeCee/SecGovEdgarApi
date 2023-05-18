@@ -4,3 +4,4 @@ pandas
 datetime
 dateutil
 json
+sec_cik_mapper
