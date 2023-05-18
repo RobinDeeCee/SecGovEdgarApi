@@ -35,7 +35,8 @@ not there yet -> but you can install the one before the fork
 # Get the fillings **all** submissions for apple
 >>> EdgarClient.get_filling(cik="320193")
 
-
+# Get the fillings **all** submissions for apple when you don't know the cik
+>>> EdgarClient.get_filling(ticker="320193")
 ```
 
 ## Contributing
