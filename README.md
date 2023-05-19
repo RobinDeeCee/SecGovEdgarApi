@@ -29,6 +29,8 @@ not there yet -> but you can install the one before the fork
 
 ### Usage
 
+#### get basic default information
+
 ```python
 >>> from SecGovEdgarApi import EdgarClient
 
@@ -36,7 +38,19 @@ not there yet -> but you can install the one before the fork
 >>> EdgarClient.get_filling(cik="320193")
 
 # Get the fillings **all** submissions for apple when you don't know the cik
->>> EdgarClient.get_filling(ticker="320193")
+>>> EdgarClient.get_filling(ticker="aapl")
+```
+
+#### get sorted/filterd information
+
+```python
+>>> from SecGovEdgarApi import EdgarClient
+
+# DEFAULT Will give all the yearly data and the last 4 quarterly data 10-Q
+>>> EdgarClient.get_filling(ticker="aapl", sortingKey= "filtered")
+
+# Will give that is found
+>>> EdgarClient.get_filling(ticker="aapl", sortingKey= "all")
 ```
 
 ## Contributing

@@ -6,10 +6,16 @@ from .IncomeStatement.IncomeStatement import IncomeStatement
 from SecGovEdgarApi._UserAgent import (
     BASE_USER_AGENT
 )
+from SecGovEdgarApi._constants import (
+    SORTING_FILTERED,
+    FY,
+    YEARLY,
+    QUARTERLY
+)
 
 class UsGaapHandler:
     
-    def getUsGaapFacts(self, cik: str):
+    def getUsGaapFacts(self, cik: str, sortingKey:str):
         api = EdgarApi(user_agent=BASE_USER_AGENT)
         
         secGovFacts = api.get_company_facts(cik=cik)["facts"]["us-gaap"].keys()
@@ -23,26 +29,35 @@ class UsGaapHandler:
         allYears = incomeStatement["year"].drop_duplicates()
         allYearsArray = allYears.to_numpy()
 
-        ### get all the time frames and make key to create dataframe
-        allDataFrameKeys = []
+        #prep for sorting filterd
+        LastquarterlyData = incomeStatement.sort_values('filed').loc[:,["filed","type"]].drop_duplicates().loc[incomeStatement['type'] != "FY"].tail(4)["filed"].to_numpy()
 
-        dataFrames = {}
+
+        ### get all the time frames and make key to create dataframe
+        dataFrames = {YEARLY:{},QUARTERLY:{}}
         for year in allYearsArray:
             availableFrames = incomeStatement.loc[incomeStatement['year'] == year]['type'].drop_duplicates()
+
             for frame in availableFrames:
                 key = str(year) + '_' + frame
-                allDataFrameKeys.append(key)
+                frameSortingKey = self.sortFrameKey(frame)
 
                 incomeStatementDataRows = incomeStatement.loc[(incomeStatement['year'] == year) & (incomeStatement['type'] == frame)].drop_duplicates(subset=['tag'])
                 balanceSheetStatementDataRows = balanceSheetStatement.loc[(balanceSheetStatement['year'] == year) & (balanceSheetStatement['type'] == frame)]                
                 cashFlowStatementDataRows = cashFlowStatement.loc[(cashFlowStatement['year'] == year) & (cashFlowStatement['type'] == frame)]
+                
 
-                #turn into Json
-                dataFrames[key] = {
-                    'IncomeStatement': self.formatToStatment(incomeStatementDataRows),
-                    'BalanceSheetStatement': self.formatToStatment(balanceSheetStatementDataRows),
-                    'CashFlowStatement': self.formatToStatment(cashFlowStatementDataRows),
-                }
+                print(incomeStatementDataRows["filed"])
+                if(frame != 'FY' and sortingKey == SORTING_FILTERED and not (incomeStatementDataRows["filed"].iloc[0] in LastquarterlyData)):
+                    pass
+                else:
+                    #turn into Json
+                    dataFrames[frameSortingKey][key] = {
+                        'IncomeStatement': self.formatToStatment(incomeStatementDataRows),
+                        'BalanceSheetStatement': self.formatToStatment(balanceSheetStatementDataRows),
+                        'CashFlowStatement': self.formatToStatment(cashFlowStatementDataRows),
+                    }
+        
         return dataFrames
 
     def formatToStatment(self, dataRows):
@@ -65,4 +80,10 @@ class UsGaapHandler:
                 # If there are no rows for this tag, set the values to "XXX"
                 result[tag] = "XXX"
             
-        return [result] 
+        return [result]
+    
+    def sortFrameKey(self, frameKey):
+        if frameKey == FY:
+            return YEARLY
+        else:
+            return QUARTERLY

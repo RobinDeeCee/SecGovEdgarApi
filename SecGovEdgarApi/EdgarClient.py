@@ -10,14 +10,18 @@ from pathlib import Path
 from SecGovEdgarApi._UserAgent import (
     BASE_USER_AGENT
 )
+from SecGovEdgarApi._constants import (
+    SORTING_FILTERED,
+)
 
 class EdgarClient():
     """An :class:`EdgarClient` object."""
 
-    def get_filling(ticker: str, cik: str = "") -> JSONType:
+    def get_filling(ticker: str, sortingKey: str = SORTING_FILTERED, cik: str = "") -> JSONType:
         """
         :param ticker: TICKER to obtain the CIK to then get the submissions.
         :param cik: CIK to obtain submissions for.
+        :param sortingKey: sortingKey is used for sorting the json output.
         :return: JSON response from an sec.gov API endpoint
             for the specified CIK, including everthing we
             can find about this the specified CIK that is in
@@ -36,7 +40,7 @@ class EdgarClient():
                 print("Please fill in a ticker or a cik")
 
         #get all the USGaap facts that we find for this company
-        dataFrames = TerminationHandler.get_usGaap(cik=cik)
+        dataFrames = TerminationHandler.get_usGaap(cik=cik, sortingKey=sortingKey)
 
         return dataFrames
     
